@@ -41,9 +41,8 @@ const Hero: React.FC = () => {
 
           {/* Description */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
-            Passionate Full Stack Developer with expertise in ReactJS, Java, and Spring Boot. 
-            I create innovative web solutions that combine beautiful user interfaces with robust backend systems. 
-            Always eager to learn new technologies and solve complex problems.
+            Passionate Full Stack Developer with expertise in ReactJS, Java, Spring Boot,Node JS and My SQL. 
+          
           </p>
 
           {/* Social Links */}
