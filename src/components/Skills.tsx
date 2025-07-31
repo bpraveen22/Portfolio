@@ -8,7 +8,7 @@ const Skills = () => {
       title: "Frontend Technology",
       icon: Code,
       skills: [
-        { name: "ReactJS", level: 85 },
+        { name: "React", level: 85 },
         { name: "JavaScript", level: 80 },
         { name: "HTML/CSS", level: 90 },
         { name: "Bootstrap", level: 80 },
@@ -21,7 +21,7 @@ const Skills = () => {
       skills: [
         { name: "Java", level: 85 },
         { name: "SpringBoot", level: 80 },
-        { name: "Node JS", level: 80 },
+        { name: "Node.js", level: 80 },
         { name: "Servlet", level: 75 }
       ]
     },
