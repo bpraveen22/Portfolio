@@ -93,7 +93,7 @@ const Skills = () => {
         </div>
 
         {/* Additional Skills */}
-        <div className="mt-16 text-center">
+        {/* <div className="mt-16 text-center">
           <h3 className="text-xl font-semibold text-foreground mb-6">Other Technologies & Tools</h3>
           <div className="flex flex-wrap justify-center gap-3">
             {["Git", "GitHub", "REST APIs", "Responsive Design", "Agile", "Problem Solving"].map((tech, index) => (
@@ -105,7 +105,7 @@ const Skills = () => {
               </span>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

@@ -1,48 +1,91 @@
-import { useState } from "react";
+import React, { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Download, Mail, Phone, MapPin, Send, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import Resume from '../assets/Praveen.B_Resume.pdf'
+import Resume from "../assets/Praveen.B_Resume.pdf";
+
+// Fill in your EmailJS credentials!
+const SERVICE_ID = "service_1idn7sv";
+const TEMPLATE_ID = "template_vfhzrjx";
+const PUBLIC_KEY = "AMK7HRisiYgMA4O-9";
 
 const Contact = () => {
+  const formRef = useRef<HTMLFormElement | null>(null);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [emailError, setEmailError] = useState("");
   const { toast } = useToast();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  // email validation function
+  const emailIsValid = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
+    if (name === "email" && emailError) setEmailError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setEmailError("");
+
+    // Validate email
+    if (!emailIsValid(formData.email)) {
+      setEmailError("Please enter a valid email address.");
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive"
+      });
+      return;
+    }
     setIsSubmitting(true);
 
-    // Simulate email sending
-    setTimeout(() => {
+    // Prepare EmailJS form: input names must match your EmailJS template!
+    try {
+      if (!formRef.current) return;
+
+      await emailjs.sendForm(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        formRef.current,
+        PUBLIC_KEY
+      );
+
       toast({
         title: "Message Sent!",
-        description: "Thank you for your message. I'll get back to you soon!",
+        description: "Thank you for your message. I'll get back to you soon!"
       });
       setFormData({ fullName: "", email: "", message: "" });
+    } catch (error) {
+      toast({
+        title: "Sending Failed",
+        description: "Unable to send your message. Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   const handleDownloadCV = () => {
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = Resume;
-    link.download = 'Praveen.B_Resume.pdf';
+    link.download = "Praveen.B_Resume.pdf";
     link.click();
   };
 
@@ -63,7 +106,8 @@ const Contact = () => {
       icon: MapPin,
       label: "Location",
       value: "Chennai, Tamil Nadu, India",
-      href: "https://www.google.com/maps/dir/13.0460905,80.2209766/Adambakkam,+City+Link+Road,+N.G.O.+Colony,+Ganesh+Nagar,+Adambakkam,+Chennai,+Tamil+Nadu+600088/@13.0201233,80.1899771,6463m/data=!3m2!1e3!4b1!4m9!4m8!1m1!4e1!1m5!1m1!1s0x3a52675c2c3476a7:0x3b03fd299e544e5c!2m2!1d80.206624!2d12.994699?entry=ttu&g_ep=EgoyMDI1MDcyMy4wIKXMDSoASAFQAw%3D%3D"
+      href:
+        "https://www.google.com/maps/dir/13.0460905,80.2209766/Adambakkam,+City+Link+Road,+N.G.O.+Colony,+Ganesh+Nagar,+Adambakkam,+Chennai,+Tamil+Nadu+600088"
     }
   ];
 
@@ -95,7 +139,7 @@ const Contact = () => {
                   <div>
                     <p className="text-sm text-muted-foreground">{info.label}</p>
                     {info.href !== "#" ? (
-                      <a 
+                      <a
                         href={info.href}
                         className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
                       >
@@ -110,7 +154,7 @@ const Contact = () => {
 
               {/* Download CV Button */}
               <div className="pt-6">
-                <Button 
+                <Button
                   onClick={handleDownloadCV}
                   className="bg-gradient-primary hover:shadow-glow transition-all duration-300 w-full"
                 >
@@ -122,8 +166,7 @@ const Contact = () => {
               {/* Additional Info */}
               <div className="pt-6 border-t border-border">
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Available for full-time positions. 
-                  Let's create something amazing together!
+                  Available for full-time positions. Let's create something amazing together!
                 </p>
               </div>
             </CardContent>
@@ -138,16 +181,24 @@ const Contact = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form
+                ref={formRef}
+                onSubmit={handleSubmit}
+                className="space-y-6"
+                autoComplete="off"
+              >
                 <div>
-                  <label htmlFor="fullName" className="block text-sm font-medium text-foreground mb-2">
+                  <label
+                    htmlFor="fullName"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
                     Full Name
                   </label>
                   <div className="relative">
                     <User className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                     <Input
                       id="fullName"
-                      name="fullName"
+                      name="fullName" // This must match your template variable (e.g. user_name)
                       type="text"
                       required
                       value={formData.fullName}
@@ -159,31 +210,42 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
                     Email Address
                   </label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                     <Input
                       id="email"
-                      name="email"
+                      name="email" // This must match your template variable (e.g. user_email)
                       type="email"
                       required
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="pl-10 bg-background border-border focus:border-primary focus:ring-primary"
+                      className={`pl-10 bg-background border-border focus:border-primary focus:ring-primary ${
+                        emailError ? "border-red-500" : ""
+                      }`}
                       placeholder="your.email@example.com"
                     />
                   </div>
+                  {emailError && (
+                    <p className="mt-1 text-red-600 text-xs">{emailError}</p>
+                  )}
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
                     Message
                   </label>
                   <Textarea
                     id="message"
-                    name="message"
+                    name="message" // This must match your template variable (e.g. message)
                     rows={6}
                     required
                     value={formData.message}

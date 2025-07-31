@@ -12,8 +12,8 @@ const Projects = () => {
       description: "Built a responsive weather app using ReactJS and OpenWeatherMap API. Displayed real-time weather data with dynamic UI updates and smooth user interaction.",
       image: project1,
       technologies: ["ReactJS","OpenWeatherMap API"],
-      liveUrl: "https://praveenb-portfolio.netlify.app",
-      githubUrl: "https://github.com/bpraveen22/Weather_App"
+      liveUrl: "https://weatherappowmapp.netlify.app/",
+      githubUrl: "https://github.com/bpraveen22/Weather_Application"
     },
     {
       id: 2,

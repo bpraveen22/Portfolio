@@ -2,12 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, Phone } from "lucide-react";
 import profileImage from "../assets/Praveen photo.jpg";
 
-const Hero = () => {
+const Hero: React.FC = () => {
+  // Social links with direct mailto: and tel: links
   const socialLinks = [
     { icon: Github, href: "https://github.com/bpraveen22", label: "GitHub" },
     { icon: Linkedin, href: "https://www.linkedin.com/in/praveen-b-51785a273/", label: "LinkedIn" },
-    { icon: Mail, href: "mailto:praveen@example.com", label: "Email" },
-    { icon: Phone, href: "tel:+918870503998", label: "Contact" }
+    // Direct email link: opens email client with your email address
+    //{ icon: Mail, href: "mailto:praveenb2201@gmail.com", label: "Email" },
+    // Direct phone link: opens dialer on mobile or compatible devices
+    //{ icon: Phone, href: "tel:+918870503998", label: "Contact" }
   ];
 
   return (
