@@ -41,7 +41,7 @@ const Hero: React.FC = () => {
 
           {/* Description */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
-            Passionate Full Stack Developer with expertise in React and Node.js, Java, Spring Boot and MySQL. 
+            Passionate Full Stack Developer with expertise in React, Node.js, Java, Spring Boot and MySQL. 
           
           </p>
 
