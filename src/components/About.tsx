@@ -31,16 +31,17 @@ const About = () => {
       period: "Dec 2024 to Present",
       current: true
     },
+ {
+      role: "Full Stack Web Developer Intern",
+      company: "Novitech R&D Pvt Ltd",
+      period: "Feb 2024 to Mar 2024",
+    },
     {
       role: "Junior Web Developer",
       company: "SeyaSoft Technologies Pvt.",
       period: "July 2022 to May 2023",
-    },
-    {
-      role: "Full Stack Web Developer Intern",
-      company: "Novitech R&D Pvt Ltd",
-      period: "Feb 2024 to Mar 2024",
     }
+   
   ];
 
   return (
