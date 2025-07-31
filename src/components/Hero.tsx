@@ -18,7 +18,7 @@ const Hero: React.FC = () => {
       <div className="container mx-auto px-4 text-center">
         <div className="animate-fadeInUp">
           {/* Profile Image */}
-          <div className="mb-8">
+            <div className="mb-8" style={{marginTop: "1rem", marginBottom: "1rem"}}>
             <div className="relative inline-block">
               <img
                 src={profileImage}
@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
 
           {/* Job Role */}
           <h2 className="text-xl md:text-2xl text-primary font-semibold mb-6">
-            Full Stack Web Developer
+            Full Stack Developer
           </h2>
 
           {/* Description */}
